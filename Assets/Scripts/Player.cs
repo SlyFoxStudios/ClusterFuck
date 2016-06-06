@@ -20,10 +20,13 @@ public class Player : MonoBehaviour {
 
 	Rigidbody2D rigidBody;
 
+	Object lazerPrefab;
+
 	void Start () {
 		audioSource = GetComponent<AudioSource> ();
 		collider = GetComponent<BoxCollider2D> ();
 		rigidBody = GetComponent<Rigidbody2D> ();
+		lazerPrefab = Resources.Load ("Lazer");
 	}
 	
 	void Update () {
