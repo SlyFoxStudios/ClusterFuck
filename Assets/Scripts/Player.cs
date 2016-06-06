@@ -1,11 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
 
 	public float speed = 10f;
 
+	public float shootSpeed = 0.55f;
+
+	bool canShoot = true;
+
+	public AudioClip[] shootSounds;
+
+	System.Random random = new System.Random ();
+
+	AudioSource audioSource;
+
 	void Start () {
+		audioSource = GetComponent<AudioSource> ();
 	}
 	
 	void Update () {
@@ -30,6 +42,13 @@ public class Player : MonoBehaviour {
 			transform.position += new Vector3 (moveSpeed, 0);
 		}
 
+		//Shooting
+		if (Input.GetMouseButton (0)) {
+			if (canShoot) {
+				StartCoroutine(Shoot ());
+			}
+		}
+
 		//Look at mouse
 		Vector3 mouse = Input.mousePosition;
 		Vector3 screenPoint = Camera.main.WorldToScreenPoint(transform.localPosition);
@@ -38,7 +57,26 @@ public class Player : MonoBehaviour {
 		transform.rotation = Quaternion.Euler(0, 0, angle);
 	}
 
-	void Shoot()
+	IEnumerator Shoot()
 	{
+		audioSource.clip = GetShootSound ();
+		audioSource.Play ();
+		canShoot = false;
+		yield return new WaitForSeconds (shootSpeed);
+		canShoot = true;
+	}
+
+	/// <summary>
+	/// Gets the shoot sound and makes sure it isn't same sound as before.
+	/// </summary>
+	/// <returns>A random shooting sound.</returns>
+	AudioClip GetShootSound()
+	{
+		List<AudioClip> usable = new List<AudioClip> (shootSounds);
+		usable.Remove (audioSource.clip);
+
+		AudioClip newClip = usable [random.Next (usable.Count)];
+
+		return newClip;
 	}
 }
