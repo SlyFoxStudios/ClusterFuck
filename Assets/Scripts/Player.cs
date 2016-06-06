@@ -16,8 +16,14 @@ public class Player : MonoBehaviour {
 
 	AudioSource audioSource;
 
+	BoxCollider2D collider;
+
+	Rigidbody2D rigidBody;
+
 	void Start () {
 		audioSource = GetComponent<AudioSource> ();
+		collider = GetComponent<BoxCollider2D> ();
+		rigidBody = GetComponent<Rigidbody2D> ();
 	}
 	
 	void Update () {
