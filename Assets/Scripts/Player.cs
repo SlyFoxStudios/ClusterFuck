@@ -6,9 +6,6 @@ public class Player : MonoBehaviour {
 
 	public float speed = 10f;
 
-	//public var bullet : GameObject;
-	public GameObject bullet;
-
 	public float shootSpeed = 0.55f;
 
 	bool canShoot = true;
@@ -57,7 +54,6 @@ public class Player : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0)) {
 			if (canShoot) {
 				StartCoroutine(Shoot ());
-				Instantiate(bullet, transform.position, Quaternion.identity);
 			}
 		}
 
@@ -77,6 +73,7 @@ public class Player : MonoBehaviour {
 		audioSource.clip = GetShootSound ();
 		audioSource.Play ();
 		canShoot = false;
+		Instantiate (lazerPrefab, transform.position, Quaternion.identity);
 		yield return new WaitForSeconds (shootSpeed);
 		canShoot = true;
 	}
