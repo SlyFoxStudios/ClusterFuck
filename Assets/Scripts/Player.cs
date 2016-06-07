@@ -38,56 +38,26 @@ public class Player : MonoBehaviour {
 
 
 		//WASD Keys
-		if (Input.GetKey (KeyCode.W)) {
+		if (Input.GetKey (KeyCode.W) || Input.GetKey (KeyCode.UpArrow)) {
 			transform.position += new Vector3 (0, moveSpeed);
 		}
 		else
-		if (Input.GetKey (KeyCode.A)) {
+		if (Input.GetKey (KeyCode.A) || Input.GetKey (KeyCode.LeftArrow)) {
 			transform.position += new Vector3 (-moveSpeed, 0);
 		}
 		else
-		if (Input.GetKey (KeyCode.S)) {
+		if (Input.GetKey (KeyCode.S) || Input.GetKey (KeyCode.DownArrow)) {
 			transform.position += new Vector3 (0, -moveSpeed);
 		}
 		else
-		if (Input.GetKey (KeyCode.D)) {
-			transform.position += new Vector3 (moveSpeed, 0);
-		}
-		
-		//Arrow keys.
-		if (Input.GetKey ("up")) {
-			transform.position += new Vector3 (0, moveSpeed);
-		}
-		else
-		if (Input.GetKey ("left")) {
-			transform.position += new Vector3 (-moveSpeed, 0);
-		}
-		else
-		if (Input.GetKey ("down")) {
-			transform.position += new Vector3 (0, -moveSpeed);
-		}
-		else
-		if (Input.GetKey ("right")) {
+		if (Input.GetKey (KeyCode.D) || Input.GetKey (KeyCode.RightArrow)) {
 			transform.position += new Vector3 (moveSpeed, 0);
 		}
 
-		//A test shooting... seen as it doesnt work... -_-
-		if (Input.GetKeyDown("space")) {
+		if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0)) {
 			if (canShoot) {
 				StartCoroutine(Shoot ());
 				Instantiate(bullet, transform.position, Quaternion.identity);
-			}
-		}
-
-		//Shooting
-		//This clearly works... not.
-		if (Input.GetMouseButton (0)) {
-			if (canShoot) {
-				StartCoroutine(Shoot ());
-				/**
-				*Well... uncomment the below code for some trippy shit.
-				*/
-				//Instantiate(bullet, transform.position, Quaternion.identity);
 			}
 		}
 
@@ -99,6 +69,9 @@ public class Player : MonoBehaviour {
 		transform.rotation = Quaternion.Euler(0, 0, angle);
 	}
 
+	/// <summary>
+	/// Shoots the lazer projectile with a cooldown
+	/// </summary>
 	IEnumerator Shoot()
 	{
 		audioSource.clip = GetShootSound ();
@@ -121,16 +94,20 @@ public class Player : MonoBehaviour {
 
 		return newClip;
 	}
-	
-	
-	 // Function called when the enemy collides with another object
 
-	
-	/**
-	*Lets end with something grim... the death script.
-	*/
-	
-	void Die() {
+	/// <summary>
+	/// Raises the trigger event.
+	/// TODO: collision event for AI
+	/// </summary>
+	void OnTriggerEnter2D()
+	{
+	}
+
+	/// <summary>
+	/// Death event
+	/// TODO: Cool shit
+	/// </summary>
+	void OnDeath() {
 		Destroy(gameObject);
 	}
 }
