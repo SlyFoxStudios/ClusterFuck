@@ -3,12 +3,13 @@ using System.Collections;
 
 public class Lazer : MonoBehaviour {
 
-	float moveSpeed = 20f;
+	float moveSpeed = 5f;
 
 	Rigidbody2D rigidBody;
 
 	void Start () {
 		rigidBody = GetComponent<Rigidbody2D> ();
+		rigidBody.velocity += new Vector2 (-moveSpeed, 0);
 	}
 	
 	void Update () {
