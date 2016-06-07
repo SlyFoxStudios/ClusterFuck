@@ -6,6 +6,9 @@ public class Player : MonoBehaviour {
 
 	public float speed = 10f;
 
+	//public var bullet : GameObject;
+	public GameObject bullet;
+
 	public float shootSpeed = 0.55f;
 
 	bool canShoot = true;
@@ -50,11 +53,41 @@ public class Player : MonoBehaviour {
 		if (Input.GetKey (KeyCode.D)) {
 			transform.position += new Vector3 (moveSpeed, 0);
 		}
+		
+		//Arrow keys.
+		if (Input.GetKey ("up")) {
+			transform.position += new Vector3 (0, moveSpeed);
+		}
+		else
+		if (Input.GetKey ("left")) {
+			transform.position += new Vector3 (-moveSpeed, 0);
+		}
+		else
+		if (Input.GetKey ("down")) {
+			transform.position += new Vector3 (0, -moveSpeed);
+		}
+		else
+		if (Input.GetKey ("right")) {
+			transform.position += new Vector3 (moveSpeed, 0);
+		}
+
+		//A test shooting... seen as it doesnt work... -_-
+		if (Input.GetKeyDown("space")) {
+			if (canShoot) {
+				StartCoroutine(Shoot ());
+				Instantiate(bullet, transform.position, Quaternion.identity);
+			}
+		}
 
 		//Shooting
+		//This clearly works... not.
 		if (Input.GetMouseButton (0)) {
 			if (canShoot) {
 				StartCoroutine(Shoot ());
+				/**
+				*Well... uncomment the below code for some trippy shit.
+				*/
+				//Instantiate(bullet, transform.position, Quaternion.identity);
 			}
 		}
 
@@ -87,5 +120,17 @@ public class Player : MonoBehaviour {
 		AudioClip newClip = usable [random.Next (usable.Count)];
 
 		return newClip;
+	}
+	
+	
+	 // Function called when the enemy collides with another object
+
+	
+	/**
+	*Lets end with something grim... the death script.
+	*/
+	
+	void Die() {
+		Destroy(gameObject);
 	}
 }
