@@ -73,7 +73,8 @@ public class Player : MonoBehaviour {
 		audioSource.clip = GetShootSound ();
 		audioSource.Play ();
 		canShoot = false;
-		Instantiate (lazerPrefab, transform.position, Quaternion.identity);
+		GameObject lazer = (GameObject)Instantiate (lazerPrefab, transform.position, Quaternion.identity);
+		lazer.transform.rotation = transform.rotation;
 		yield return new WaitForSeconds (shootSpeed);
 		canShoot = true;
 	}

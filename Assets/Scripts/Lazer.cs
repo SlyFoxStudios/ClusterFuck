@@ -3,16 +3,16 @@ using System.Collections;
 
 public class Lazer : MonoBehaviour {
 
-	float moveSpeed = 5f;
+	float moveSpeed = 13f;
 
 	Rigidbody2D rigidBody;
 
 	void Start () {
 		rigidBody = GetComponent<Rigidbody2D> ();
-		rigidBody.velocity += new Vector2 (-moveSpeed, 0);
 	}
 	
 	void Update () {
+		transform.position += transform.right * Time.deltaTime * moveSpeed;
 	}
 
 	void OnBecameInvisible()
