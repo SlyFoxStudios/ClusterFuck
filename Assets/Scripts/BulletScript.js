@@ -14,4 +14,4 @@ function Start () {
 function OnBecameInvisible() {
     // Destroy the bullet 
     Destroy(gameObject);
-} 
+}
